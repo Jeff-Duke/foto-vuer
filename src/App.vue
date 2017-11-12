@@ -335,7 +335,6 @@ button:disabled {
     width: 15rem;
     position: relative;
     margin: 1rem;
-    transition: all .3s ease;
 
     img {
       display: block;
