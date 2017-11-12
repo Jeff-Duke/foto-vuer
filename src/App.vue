@@ -1,60 +1,97 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+  <main id="app">
+    <section class="inputs">
+    <label
+      for="title-input">
+      Title
+    </label>
+    <input
+      id="title-input"
+      type="text"
+    />
+    <label
+      for="caption-input">
+      Caption
+    </label>
+    <input
+      id="caption-input"
+      type="text"
+    />
+    <label
+      class="file-label"
+      for="file-input">
+      Choose File
+    </label>
+    <input id="file-input" type="file">
+    <button>Add to Album</button>
+    </section>
+    <section class="photo-album">
+      Photos go here:
+    </section>
+  </main>
+
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
   }
-}
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+$color-dark-purple: #3e2a35;
+$color-purple: #5b4447;
+$color-light-purple: #c2b2b4;
+$color-border: #938284;
+$color-white: #fff;
+$color-black: #000;
+
+body {
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
 }
 
-h1, h2 {
-  font-weight: normal;
+.inputs {
+  display: block;
+  background-color: $color-dark-purple;
+  min-height: 30rem;
+  padding: 2rem;
+  label {
+    color: $color-white;
+  }
+
+  input,
+  label,
+  button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+#file-input {
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
+.file-label {
+  color: red;
 }
 
-a {
-  color: #42b983;
+.photo-album {
+  background-color: $color-light-purple;
+  min-height: 60rem;
 }
+
 </style>
