@@ -37,11 +37,18 @@
             for="file-input">
             Choose File
           </label>
-          <button @click="addFoto">Add to Album</button>
+          <button
+            @click="validateFoto"
+            :disabled="isDisabled"
+          >
+            Add to Album
+          </button>
         </div>
+        <h2 v-if="error" class="error">{{ error }}</h2>
       </article>
     </section>
     <section class="foto-album">
+      <h2 v-if="noPhotos">Please use the form above to add a photo to the album!</h2>
       <div
         v-for="foto in fotos"
         :class="[{favorited: foto.favorite}, 'foto-card']"
@@ -67,31 +74,62 @@
 </template>
 
 <script>
+const EMPTY_TITLE = 'Please add a title';
+const EMPTY_CAPTION = 'Please add a caption';
+const EMPTY_FOTO = 'Please select a photo';
+
 export default {
-  name: "app",
+  name: 'app',
   data() {
     return {
-      fotos: [ {title: 'pupper', caption: 'pupper-doggo', path: 'src/assets/puppy1.jpg', favorite: false, id: 12309481203948} ],
-      selectedFoto: "",
-      title: "",
-      caption: ""
+      fotos: [],
+      selectedFoto: '',
+      title: '',
+      caption: '',
+      error: '',
     };
   },
+  computed: {
+    isDisabled() {
+      return !this.title || !this.caption || !this.selectedFoto;
+    },
+    noPhotos() {
+      return !this.fotos.length;
+    },
+  },
   methods: {
+    clearInputs() {
+      this.title = '';
+      this.caption = '';
+      this.selectedFoto = '';
+    },
     onFileChange() {
       this.selectedFoto = `src/assets/${this.$refs.image.files[0].name}`;
     },
+    validateFoto() {
+      if (!this.title) {
+        this.error = EMPTY_TITLE;
+      } else if (!this.caption) {
+        this.error = EMPTY_CAPTION;
+      } else if (!this.selectedFoto) {
+        this.error = EMPTY_FOTO;
+      } else {
+        this.addFoto();
+        this.clearInputs();
+      }
+    },
     addFoto() {
+      const { title, caption, selectedFoto: path } = this;
+
       const foto = {
-        title: this.title,
-        caption: this.caption,
-        path: this.selectedFoto,
+        title,
+        caption,
+        path,
         favorite: false,
-        id: Date.now()
+        id: Date.now(),
       };
 
       this.fotos.push(foto);
-      this.clearInputs();
     },
     favorite(fotoId) {
       const id = parseInt(fotoId);
@@ -109,11 +147,7 @@ export default {
         return foto.id !== id;
       });
     },
-    clearInputs() {
-      this.title = "";
-      this.caption = "";
-    }
-  }
+  },
 };
 </script>
 
@@ -137,8 +171,15 @@ html {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
+}
+
+button:disabled {
+  pointer-events: none;
+  cursor: inherit;
+  background-color: #ddd !important;
+  color: gray !important;
 }
 
 .inputs-container {
@@ -148,7 +189,7 @@ body {
   padding: 2rem;
 
   @media only screen and (max-width: 640px) {
-    padding: .5rem;
+    padding: 0.5rem;
   }
 
   label {
@@ -173,11 +214,11 @@ body {
     text-transform: uppercase;
 
     .logo {
-    background: url("./assets/foto-finder-logo.svg") center no-repeat;
-    content: "";
-    display: inline-block;
-    height: 2.75rem;
-    width: 4rem;
+      background: url('./assets/foto-finder-logo.svg') center no-repeat;
+      content: '';
+      display: inline-block;
+      height: 2.75rem;
+      width: 4rem;
     }
 
     @media only screen and (max-width: 640px) {
@@ -224,7 +265,7 @@ body {
     }
   }
 
-  input[type="file"] {
+  input[type='file'] {
     height: 0.1px;
     width: 0.1px;
     opacity: 0;
@@ -237,6 +278,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     display: block;
+    min-height: 3rem;
     width: 100%;
 
     button,
@@ -253,7 +295,7 @@ body {
         float: none !important;
         display: block;
         margin-bottom: 2rem;
-        width: 100%
+        width: 100%;
       }
     }
     .file-label {
@@ -266,6 +308,12 @@ body {
       float: right;
     }
   }
+
+  .error {
+    font-weight: 800;
+    color: $color-white;
+    text-align: center;
+  }
 }
 
 .foto-album {
@@ -275,7 +323,8 @@ body {
   flex-flow: row wrap;
   padding: 2rem;
 
-  h3, p {
+  h3,
+  p {
     padding: 0 1rem;
   }
 
@@ -287,15 +336,16 @@ body {
     position: relative;
     margin: 1rem;
 
-    & ~ .foto-card {
-      margin-left: .5rem;
-    }
-
     img {
       max-width: 100%;
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 1rem;
+    }
+
+    p {
+      position: absolute;
+      bottom: 4rem;
     }
 
     .card-footer {
