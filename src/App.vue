@@ -335,9 +335,12 @@ button:disabled {
     width: 15rem;
     position: relative;
     margin: 1rem;
+    transition: all .3s ease;
 
     img {
+      display: block;
       max-width: 100%;
+      max-height: 12rem;
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 1rem;
