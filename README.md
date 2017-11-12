@@ -1,18 +1,11 @@
 # foto-vuer
 
-> A place to view your photos
+A place to upload some photos.  This project was built in `Vue.js` and is one of many projects from the [Turing School](https://turing.io).  Original project spec is [here.](http://frontend.turing.io/projects/foto-finder.html)
 
-## Build Setup
+There are seperate branches for each phase of the spec:
+- [Phase1](https://github.com/Jeff-Duke/foto-vuer/tree/phase-1)
+- [Phase2](https://github.com/Jeff-Duke/foto-vuer/tree/phase-2)
+- [Phase3](https://github.com/Jeff-Duke/foto-vuer/tree/phase-3)
+- [Final](https://github.com/Jeff-Duke/foto-vuer/tree/final)
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+The **Final** branch includes the Phase-4 code but with additional refactors to make the code more readable and to help with deployment.
